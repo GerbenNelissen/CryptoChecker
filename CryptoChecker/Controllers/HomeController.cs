@@ -1,11 +1,5 @@
 ﻿namespace CryptoChecker.Controllers
 {
-    using CryptoChecker.Models;
-
-    using Microsoft.AspNetCore.Mvc;
-
-    using System.Diagnostics;
-
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
