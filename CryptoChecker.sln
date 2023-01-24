@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoChecker", "CryptoChecker\CryptoChecker.csproj", "{66743124-5AA1-4783-86C1-5FD1AD87F892}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoChecker", "CryptoChecker\CryptoChecker.csproj", "{66743124-5AA1-4783-86C1-5FD1AD87F892}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoChecker.Tests", "CryptoChecker.Tests\CryptoChecker.Tests.csproj", "{624FFEA8-F858-4552-B562-43EC1BF4F4B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{66743124-5AA1-4783-86C1-5FD1AD87F892}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66743124-5AA1-4783-86C1-5FD1AD87F892}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66743124-5AA1-4783-86C1-5FD1AD87F892}.Release|Any CPU.Build.0 = Release|Any CPU
+		{624FFEA8-F858-4552-B562-43EC1BF4F4B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{624FFEA8-F858-4552-B562-43EC1BF4F4B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{624FFEA8-F858-4552-B562-43EC1BF4F4B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{624FFEA8-F858-4552-B562-43EC1BF4F4B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

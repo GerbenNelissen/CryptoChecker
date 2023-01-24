@@ -4,12 +4,6 @@
     {
         #region Main Methods
 
-        // GET: QuotesController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         // GET: QuotesController/Details/input
         [HttpPost]
         public ActionResult Details(string input)
