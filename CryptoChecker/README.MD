@@ -1,6 +1,7 @@
 ﻿Answers for technical questions:
 1. How long did you spend on the coding assignment? What would you add to your solution if you had more time? If you didn't spend much time on the coding assignment then use this as an opportunity to explain what you would add. 
 14 Hours
+If I'd spend more time on this assignment I would add better unittests. I'd also take the time to convert the Json response with cleaner code.
 
 2. What was the most useful feature that was added to the latest version of your language of choice? Please include a snippet of code that shows how you've used it.
 global using directives (please see Usings.cs files within project)
