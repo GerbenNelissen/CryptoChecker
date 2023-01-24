@@ -2,7 +2,35 @@
     ViewData["Title"] = "Home Page";
 }
 
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    @Html.ActionLink("Get Quotes", "Details", "QuotesController", new { input = "BTC" })
+    @using (Html.BeginForm("Details", "Quotes", FormMethod.Post, new { id = "searchForm" }))
+    {
+        <div id="search">
+            <div id="searchtxt">
+                <input type="search" name="input" id="txtSearch" />
+            </div>
+            <br />
+            <div id="searchbtn">
+                <input id="Search" type="submit" value="Get Quotes" />
+            </div>
+        </div>
+    }
 </div>
+
+<script>
+    $(function () {
+        $('#searchForm').submit(function () {
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                input: txtSearch,
+                success: function (result) {
+                    $('#resultContainer').html(result);
+                }
+            });
+            return false;
+        });
+    });
+</script>

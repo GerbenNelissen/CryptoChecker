@@ -24,10 +24,12 @@ namespace CryptoChecker.Services
         public QuotesModel GetAllQuotes(string input)
         {
             string[] converts = Resource.converts.Split(",").ToArray();
+            List<Currency> list = new();
             foreach (var convert in converts)
             {
-                _quotes.Currency.Add(GetQuotesAsync(input, convert));
+                list.Add(GetQuotesAsync(input, convert));
             }
+            _quotes.Currency = list;
             return _quotes;
         }
 
@@ -35,13 +37,9 @@ namespace CryptoChecker.Services
 
         #region Helper Methods
 
-
-
         private Currency GetQuotesAsync(string input, string convert)
         {
-            _quotes.Symbol = input;
             var URL = new UriBuilder(Resource.QuotesURL);
-            string json = string.Empty;
 
             var queryString = HttpUtility.ParseQueryString(string.Empty);
             queryString["symbol"] = input;
@@ -54,22 +52,43 @@ namespace CryptoChecker.Services
             client.DefaultRequestHeaders.Add("Accepts", "application/json");
             HttpResponseMessage response = client.GetAsync(URL.ToString()).Result;
             response.EnsureSuccessStatusCode();
-            json = response.Content.ReadAsStringAsync().Result;
-            return JsonToCurrency(json, convert);
+            string json = response.Content.ReadAsStringAsync().Result;
+            return JsonToCurrency(json, convert, input);
         }
 
-        private Currency JsonToCurrency(string json, string convert)
+        private Currency JsonToCurrency(string json, string convert, string input)
         {
             Currency? currency = new();
 
-            JObject jsonObj = JObject.Parse(json);
-            decimal price;
+            var jsonObject = (JObject)JsonConvert.DeserializeObject(json)!;
+            var jsonData = (JObject)(jsonObject.Property("data")!.Value);
+            JArray jsonSym = (JArray)jsonData.Property(input)!.Value;
+            foreach(JObject item in jsonSym.Children())
+            {
+                if(item.Property("name") is not null)
+                {
+                    _quotes.Name = _quotes.Name == String.Empty ? item.Property("name")!.Value.ToString() : _quotes.Name;
+                }
+                if(item.Property("symbol") is not null)
+                {
+                    _quotes.Symbol = _quotes.Symbol == String.Empty ? item.Property("symbol")!.Value.ToString() : _quotes.Symbol;
+                }
+            }
+            JObject jsonQuote = new();
+            foreach (JObject item in jsonSym.Children())
+            {
+                if (item.Property("quote") is not null)
+                {
+                    jsonQuote = (JObject)item.Property("quote")!.Value;
+                }
+            }
+            var jsonConvert = (JObject)jsonQuote.Property(convert)!.Value;
+            var jsonPrice = jsonConvert.Property("price")!.Value;
 
-            _quotes.Name = _quotes.Name is null ? jsonObj["data"]!["1"]!["name"]!.ToString() : _quotes.Name;
-
-            Decimal.TryParse(jsonObj["data"]?["1"]?["quote"]?[convert]?["price"]?.ToString(), out price);
+            _ = decimal.TryParse(jsonPrice.ToString(), out decimal price);
             currency.Name = convert;
-            currency!.Price = price;
+            currency!.Price = price;            
+
             return currency;
         }
 

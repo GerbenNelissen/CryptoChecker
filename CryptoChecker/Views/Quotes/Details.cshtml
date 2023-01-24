@@ -1,0 +1,13 @@
+﻿@model CryptoChecker.Models.QuotesModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Html.DisplayTextFor(model => model.Name) - @Html.DisplayTextFor(model => model.Symbol)</h1>
+
+@Html.Partial("List", Model.Currency)
+
+<div>
+    <a asp-action="Index" asp-controller="Home">Back</a>
+</div>
