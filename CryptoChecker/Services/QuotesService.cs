@@ -27,7 +27,7 @@ namespace CryptoChecker.Services
             List<Currency> list = new();
             foreach (var convert in converts)
             {
-                list.Add(GetQuotesAsync(input, convert));
+                list.Add(GetQuotes(input, convert));
             }
             _quotes.Currency = list;
             return _quotes;
@@ -37,7 +37,7 @@ namespace CryptoChecker.Services
 
         #region Helper Methods
 
-        private Currency GetQuotesAsync(string input, string convert)
+        private Currency GetQuotes(string input, string convert)
         {
             var URL = new UriBuilder(Resource.QuotesURL);
 
@@ -62,7 +62,7 @@ namespace CryptoChecker.Services
 
             var jsonObject = (JObject)JsonConvert.DeserializeObject(json)!;
             var jsonData = (JObject)(jsonObject.Property("data")!.Value);
-            JArray jsonSym = (JArray)jsonData.Property(input)!.Value;
+            JArray jsonSym = (JArray)jsonData.Property(input.ToUpper())!.Value;
             foreach(JObject item in jsonSym.Children())
             {
                 if(item.Property("name") is not null)
